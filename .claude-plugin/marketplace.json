@@ -1,0 +1,13 @@
+{
+  "name": "ivo-job-search-plugins",
+  "owner": {
+    "name": "Ivo Pletikosic"
+  },
+  "plugins": [
+    {
+      "name": "job-search-copilot",
+      "source": "./plugins/job-search-copilot",
+      "description": "Runs a self-service job search: tracker webpage, scheduled job board and career page scans, Gmail reply tracking, LinkedIn network matching, interview cheatsheets, and practice interviews."
+    }
+  ]
+}
