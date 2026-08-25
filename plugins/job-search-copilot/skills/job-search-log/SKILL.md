@@ -5,8 +5,8 @@ description: Makes a quick manual update to the tracker outside of a scheduled s
 
 # Manual tracker update
 
-Read `${CLAUDE_PLUGIN_ROOT}/shared/conventions.md` and `tracker.md`. If no
-tracker exists yet, tell the user to run setup first ("set up my job
+Read `${CLAUDE_PLUGIN_ROOT}/shared/conventions.md` and `tracker-data.md`. If
+no tracker exists yet, tell the user to run setup first ("set up my job
 search") and stop.
 
 Figure out the intent from the message:
@@ -28,10 +28,11 @@ Figure out the intent from the message:
 - **Freeform note** ("note on X: ...") — append a dated line to that entry's
   `notes`, wherever it currently lives (applications/leads/watchlist).
 
-Load `artifact-design` only if not already loaded this session. Read the
-current tracker artifact, make the one change in the JSON data block, bump
-`lastUpdated`, keep the same favicon, and republish to the same URL from
-`tracker.md`.
+Make the one change directly in `tracker-data.md`, bump `lastUpdated`. Then
+run the sync procedure from `shared/conventions.md` to update the webpage
+view — since this is almost always an interactive session, this should
+normally succeed; if it doesn't, don't make a thing of it, the data change
+already saved.
 
 Confirm with one short line — what changed, nothing more. This should feel
 instant, not like a form.

@@ -7,9 +7,10 @@ interview prep.
 
 ## What it does
 
-- **Tracker** — a private webpage (published with the Artifact tool) listing
-  your applications, a leads queue from automated scans, and a watchlist of
-  companies you want to keep an eye on. Bookmark it; it updates itself.
+- **Tracker** — your applications, a leads queue from automated scans, and a
+  watchlist of companies, kept in the project's own memory (so nothing is
+  ever lost even if a scan can't reach the internet), and rendered as a
+  private webpage you can bookmark and check from your phone.
 - **Scheduled job board scans** — searches the job boards you choose (e.g.
   LinkedIn Jobs, Indeed) for roles matching your target profile and adds new
   matches to the tracker's Leads section.
@@ -49,13 +50,19 @@ interview prep.
      matching
    - optionally prompt you to connect Gmail for reply tracking
    - set up the recurring scans
-4. That's it — scans run on their own schedule from then on. Come back to the
-   project any time to check the tracker, ask for an interview cheatsheet, or
-   ask for a practice interview.
-
-If the skills above don't seem to trigger in your new Project: check
-Customize → Plugins from inside that Project and confirm job-search-copilot
-shows as enabled there — some Cowork setups scope plugins per-Project.
+4. `job-search-setup` will also mention an **optional** one-time setting
+   that keeps the tracker webpage instantly current after a scheduled scan,
+   instead of catching up the next time you're chatting here (which happens
+   either way — nothing about your data depends on this). Skip it if it
+   sounds fiddly.
+5. That's it. A note on how "scheduled" scans actually behave right now:
+   this platform's scheduled tasks don't reliably fire to-the-minute while
+   the app is closed — they tend to catch up whenever you next open Cowork,
+   rather than running silently in the true background. So treat it as
+   "checks for what's new whenever I check in" rather than "runs unattended
+   on a strict clock," and open the project every few days for the freshest
+   results. Come back any time to check the tracker, ask for an interview
+   cheatsheet, or ask for a practice interview.
 
 ## Skills included
 

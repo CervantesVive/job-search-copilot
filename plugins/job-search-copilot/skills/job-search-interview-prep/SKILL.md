@@ -6,9 +6,9 @@ description: Builds a single-page interview cheat sheet (company snapshot, role 
 # Interview cheatsheet
 
 Read `${CLAUDE_PLUGIN_ROOT}/shared/conventions.md` and `profile.md` from
-project memory for the person's background and target profile. If a
-`tracker.md` exists, read the tracker artifact and pull anything already
-known about this company/role (status, source, notes, contact).
+project memory for the person's background and target profile. If
+`tracker-data.md` exists, read it and pull anything already known about this
+company/role (status, source, notes, contact).
 
 ## Gather the specifics
 
@@ -52,6 +52,6 @@ as a persisted Artifact — these are single-use per interview, not something
 to keep a permanent link to; if the user asks for a link version, that's a
 reasonable exception.
 
-If a matching entry exists in the tracker, update its `notes` with the
-interview date/stage now scheduled (same read → edit JSON block → republish
-pattern as `job-search-scan`).
+If a matching entry exists in `tracker-data.md`, update its `notes` with the
+interview date/stage now scheduled, then run the sync procedure from
+`shared/conventions.md` to refresh the webpage view.

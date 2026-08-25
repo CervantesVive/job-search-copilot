@@ -5,8 +5,8 @@ description: Scans Gmail for recruiter or company replies tied to the job search
 
 # Gmail reply check
 
-Read `${CLAUDE_PLUGIN_ROOT}/shared/conventions.md` first, then `tracker.md`
-and `gmail-status.md` from project memory.
+Read `${CLAUDE_PLUGIN_ROOT}/shared/conventions.md` first, then
+`tracker-data.md` and `gmail-status.md` from project memory.
 
 If `gmail-status.md` says Gmail isn't connected, or the `mcp__Gmail__*` tools
 aren't available in this session, tell the user Gmail isn't connected yet and
@@ -15,8 +15,8 @@ that they can say "connect Gmail" to set it up (that runs through
 
 ## Search
 
-Read the tracker to get the list of companies currently in `applications`
-(and recent `leads`). Using `mcp__Gmail__search_threads`, search for messages
+Read `tracker-data.md` to get the list of companies currently in
+`applications` (and recent `leads`). Using `mcp__Gmail__search_threads`, search for messages
 newer than `gmail-status.md`'s last-run timestamp, per company, using the
 company name and common recruiting-domain patterns (e.g. `from:company.com
 OR from:greenhouse.io OR from:lever.co OR from:myworkday.com`, scoped with
@@ -47,11 +47,12 @@ For new inbound outreach not tied to any existing entry: add it to `leads`
 with `source: "inbound email"` and a `fitNotes` summarizing what the email
 said.
 
-Republish the tracker artifact the same way `job-search-scan` does (load
-`artifact-design` if not already loaded this session, edit the JSON data
-block, keep the same favicon, republish to the same URL).
+Write these changes straight to `tracker-data.md` — that's the step that
+must succeed. Then run the sync procedure from `shared/conventions.md` to
+update the webpage view (best-effort, same as `job-search-scan`).
 
-Update `gmail-status.md` with the new last-run timestamp.
+Update `gmail-status.md` with the new last-run timestamp regardless of
+whether the webpage sync succeeded.
 
 ## Summary
 

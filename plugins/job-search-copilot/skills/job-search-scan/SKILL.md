@@ -6,10 +6,10 @@ description: Scans configured job boards and/or company career pages for new rol
 # Job search scan
 
 Read `${CLAUDE_PLUGIN_ROOT}/shared/conventions.md` first. Then read
-`profile.md`, `search-config.md`, `tracker.md`, and `network.md` (if it
-exists) from project memory. If `tracker.md` doesn't exist, this project
-hasn't been set up yet — tell the user to run setup first (say "set up my
-job search") and stop.
+`profile.md`, `search-config.md`, `tracker-data.md`, and `network.md` (if it
+exists) from project memory. If `tracker-data.md` doesn't exist, this
+project hasn't been set up yet — tell the user to run setup first (say "set
+up my job search") and stop.
 
 Run **job-board mode**, **company-page mode**, or both, based on what the
 caller asked for. A scheduled trigger says which one explicitly. A manual
@@ -53,18 +53,20 @@ rather than everyone getting re-checked every run:
 ## Adding matches
 
 For every new match, in either mode: dedupe against `applications` and
-`leads` already in the tracker (company + role, case-insensitive) — skip if
-already present. Otherwise build a `leads` entry per the schema in
+`leads` already in `tracker-data.md` (company + role, case-insensitive) —
+skip if already present. Otherwise build a `leads` entry per the schema in
 `shared/conventions.md`: `source` is the board name or `"career page scan"`,
 `fitNotes` is one honest sentence on why it matches (or a caveat if it's a
 stretch), and `knowSomeone` is set from `network.md` if any current
 connection's company matches (name + their title, else leave empty).
 
-Load `artifact-design` only if you haven't already this session, read the
-current tracker artifact, append the new `leads` entries and bump
-`lastUpdated`, and republish to the same URL (same favicon as before —
-check `tracker.md` / the existing page, never change it). Update
-`search-config.md` if `rotation_index` or any `career_page_url` changed.
+Write the new `leads` entries and bumped `lastUpdated` straight to
+`tracker-data.md` — this is the step that must succeed for the scan to count
+as done. Then run the sync procedure from `shared/conventions.md` to update
+the webpage view (best-effort; see that section for how to handle it
+failing — it's not this skill's problem to solve). Update `search-config.md`
+if `rotation_index` or any `career_page_url` changed — do this regardless of
+whether the webpage sync succeeded, since it's independent.
 
 ## Summary
 

@@ -15,12 +15,13 @@ in this skill — it defines every file name and data shape referenced below.
 
 ## 0. Check for an existing setup
 
-Call `project_memory_read` with no arguments. If `tracker.md` already exists,
-read it, tell the person their tracker is already set up, give them the link
-again, and ask if they want to update their target profile instead (roles,
-locations, companies) rather than starting over. If they do, jump to step 2
-and only touch `profile.md` / `search-config.md`, not the tracker artifact
-structure. Otherwise stop here.
+Call `project_memory_read` with no arguments. If `tracker-data.md` already
+exists, this person is already set up: read `tracker.md` for the link (if a
+webpage was ever published), tell them their tracker already exists, give
+them the link again, and ask if they want to update their target profile
+instead (roles, locations, companies) rather than starting over. If they do,
+jump to step 2 and only touch `profile.md` / `search-config.md`, not the
+tracker data structure. Otherwise stop here.
 
 ## 1. Resume intake
 
@@ -85,16 +86,17 @@ from 2.7, `rotation_index: 0`), and `gmail-status.md` (`connected: yes/no`)
 per the shapes in `shared/conventions.md`. Each with proper frontmatter.
 Update `MEMORY.md`'s index with one line per file.
 
-## 4. Publish the tracker
+## 4. Create the tracker
 
-Load the `artifact-design` skill, then build and publish the tracker page per
-the JSON-data-block structure in `shared/conventions.md`. Seed `watchlist`
-from any companies named in step 2.4 (empty `applications` and `leads` — the
-scans will populate those). Use the person's first name and a one-line
-profile summary in the header. Pick a favicon now and record it mentally —
-every future update to this page must reuse the same one.
+Write `tracker-data.md` per the JSON shape in `shared/conventions.md` — this
+is the real tracker, and it exists independent of any webpage. Seed
+`watchlist` from any companies named in step 2.4 (empty `applications` and
+`leads` — the scans will populate those). Use the person's first name and a
+one-line profile summary as `profileSummary`.
 
-Write `tracker.md` with the resulting URL and today's date.
+Then run the sync procedure from `shared/conventions.md` to publish the
+first webpage view (this is an interactive session, so this should succeed
+normally) and write `tracker.md` with the resulting URL.
 
 ## 5. Process a LinkedIn export, if provided
 
@@ -136,11 +138,31 @@ run finds something, and `initiation: "human_request"` since this was set up
 at their explicit ask. Leave `environment_id` unset so each trigger runs in
 this project's environment.
 
-## 7. Wrap-up message
+## 7. Optional: keep the tracker webpage always current
+
+Your data is always safe regardless of this setting — every scan writes to
+`tracker-data.md` directly, not the webpage. This setting only affects
+whether the *webpage* re-renders itself automatically right after a
+scheduled scan, versus catching up the next time you're chatting here (which
+happens automatically too, just not instantly). Mention it as a minor,
+skippable option, not a required step:
+
+*"Optional: if you want your tracker webpage to always show the very latest
+the second a scheduled scan finds it — rather than catching up next time
+you're chatting here, which happens either way — there's a one-time setting
+for it. Open the cloud/environment icon near the message box, edit the
+environment in use (probably 'Default'), and set Network access to 'Full'
+or 'Custom' with `*.frame.claudeusercontent.com` allowed. Totally optional —
+skip it if that sounds fiddly, nothing about your data depends on it."*
+
+## 8. Wrap-up message
 
 End with one short message covering: the tracker link, what's scheduled and
-roughly how often, and three things they can just say any time — *"prep me
-for an interview at [company]"*, *"practice interview for this posting"* (a
-job link or pasted description), and *"I applied to [company]"* or *"add
-[company] to my watchlist"* to update the tracker by hand. Keep it to a few
-sentences — they now have a working link to check instead of a wall of text.
+roughly how often (add: scheduled scans catch up whenever you next open
+Cowork, rather than firing to-the-minute in the background — so checking in
+every few days gets you the freshest results), and three things they can
+just say any time — *"prep me for an interview at [company]"*, *"practice
+interview for this posting"* (a job link or pasted description), and *"I
+applied to [company]"* or *"add [company] to my watchlist"* to update the
+tracker by hand. Keep it to a few sentences — they now have a working link
+to check instead of a wall of text.

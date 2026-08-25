@@ -42,35 +42,29 @@ Files, each with YAML frontmatter (`name`, `description`, `type: project`):
   fields needed for matching. Do not store the full export (it can contain
   message history, ad-targeting data, etc. that this plugin has no use for)
   — only Company, Name, Position from `Connections.csv`.
-- **`tracker.md`** — a single line: the current tracker artifact's URL, plus
-  the date it was last successfully updated. Every skill that touches the
-  tracker reads this file first to get the URL, and updates the "last
-  successfully updated" line after a successful publish.
+- **`tracker-data.md`** — the tracker's actual data, and its single source of
+  truth. A YAML-fronted markdown file whose body is one fenced ` ```json `
+  block in the shape given below. Every skill that changes tracker data
+  (`job-search-setup`, `job-search-scan`, `job-search-gmail-check`,
+  `job-search-log`, `job-search-interview-prep`) reads this file, changes the
+  JSON in plain code logic, and writes the whole file back with
+  `project_memory_write`/`memory_str_replace` — never the published webpage.
+  This is deliberate: project memory has proven reliable from scheduled-task
+  sessions, while the published webpage depends on network access those
+  sessions don't always have configured (see "The tracker webpage" below) —
+  so the data must never live only in the webpage.
+- **`tracker.md`** — just a pointer to the *view*: the published webpage's
+  URL, its favicon (so every sync reuses the same one without needing to
+  fetch the page to check), and the date it was last successfully synced.
+  Not the data. If this file doesn't exist yet, no webpage has been
+  published yet.
 
 `MEMORY.md` (the project memory index) should end up with one line per file
 above, per the standard index format.
 
-## The tracker artifact
+## Tracker data (source of truth)
 
-Published once during setup with the `Artifact` tool, then updated in place
-(`Artifact` with the same file path/url redeploys it) by `job-search-setup`,
-`job-search-scan`, `job-search-gmail-check`, and `job-search-log`.
-
-**Before writing or editing it, load the `artifact-design` skill** (required
-by the Artifact tool for any new artifact content) and give it a two-emoji
-`favicon` that stays the same across every update (pick one at first
-publish, e.g. 🧭, and never change it).
-
-Structural rule: keep all tracker data in one `<script type="application/json"
-id="tracker-data">...</script>` block in the page, and render it into the
-visible tables with a small inline `<script>` that runs on load. Every update
-is: read the artifact (`Artifact` action `read`), parse that JSON block,
-make the data change in plain code logic (not by editing rendered HTML),
-write the full file back out with the updated JSON block, and republish with
-`Artifact` to the same `url`. This keeps updates mechanical and avoids
-corrupting hand-styled HTML.
-
-JSON shape:
+JSON shape stored in `tracker-data.md`:
 
 ```json
 {
@@ -119,6 +113,35 @@ JSON shape:
 `priority` values: `high`, `medium`, `low`. IDs are `app-####` / `lead-####`,
 zero-padded, incrementing — never reuse or renumber existing IDs.
 
+## The tracker webpage (best-effort view)
+
+The published `Artifact` webpage is a rendering of `tracker-data.md` — never
+edit it directly, and never treat it as a data source. Any skill that just
+changed `tracker-data.md` should, as its last step, run this **sync
+procedure**: read `tracker-data.md`, build the full HTML page from that JSON
+(same structure every time — this is a render, not an edit), and publish it
+with `Artifact` (first time: no `url` yet, creates one, write it to
+`tracker.md`; after that: pass the existing `url` from `tracker.md`, which
+redeploys in place). On success, update the "last synced" date in
+`tracker.md`.
+
+**If the sync fails** (most likely cause: the session's network access
+can't reach the artifact-hosting domain — this happens in scheduled-task
+sessions whose environment hasn't been configured for it, see
+`job-search-setup` step 7): this is now low-stakes, not data loss — the data
+is already safely written to `tracker-data.md` regardless of whether the
+sync succeeded. Don't retry repeatedly. Mention it only briefly, if at all
+— e.g. "(the tracker page may take a bit to catch up — nothing's lost)" —
+rather than treating it as an error to resolve. Never skip writing
+`tracker-data.md` because a sync might fail later; the two are independent.
+
+**Before writing the page HTML, load the `artifact-design` skill** (required
+by the Artifact tool for any new artifact content). Reuse the `favicon`
+recorded in `tracker.md` on every sync after the first — never fetch the
+existing page just to check it, that reintroduces the same network
+dependency this design avoids. On the very first sync, pick one (e.g. 🧭)
+and record it in `tracker.md` alongside the URL.
+
 Page sections, top to bottom: header with the person's name/profile summary
 and last-updated date, a tab or section switcher for **Applications / Leads /
 Watchlist**, each rendered as a sortable-by-eye table (status as a colored
@@ -131,7 +154,8 @@ language to reuse (translated from cards to table rows).
 
 Before adding anything to `leads` or `applications`, compare company+role
 (case-insensitive, trimmed) against both `applications` and `leads` already
-in the tracker. Skip anything already present rather than adding a duplicate.
+in `tracker-data.md`. Skip anything already present rather than adding a
+duplicate.
 
 ## Talking to the user vs. writing data
 
@@ -140,3 +164,10 @@ time. End every scan/check skill with a short plain-language summary in your
 final reply (what ran, what's new, what needs attention) — that summary is
 what the user sees when they open the run later or get a notification. Don't
 rely on them seeing intermediate tool calls.
+
+Scheduled tasks on this platform don't always fire precisely on their cron
+schedule while the app is closed — they can run late, or batched, once the
+app is next opened. Don't promise the person "this runs while you're away"
+in absolute terms; it's closer to "this catches up whenever you're next in
+the app." Setup should set that expectation once and skills shouldn't need
+to repeat it.
