@@ -9,10 +9,10 @@ for what it does.
 **Add this repo as a marketplace (recommended — gets future updates):**
 
 In Cowork: **Customize → Plugins → the "+" under Personal plugins → Add
-marketplace → Add from a repository**, enter this repo (`owner/repo` or the
-full GitHub URL), then install `job-search-copilot` from the list. When this
-repo gets updated, click **Update** on the marketplace in Cowork to pull the
-new version.
+marketplace → Add from a repository**, enter this repo
+(`CervantesVive/job-search-copilot` or the full GitHub URL), then install
+`job-search-copilot` from the list. When this repo gets updated, click
+**Update** on the marketplace in Cowork to pull the new version.
 
 **Download the plugin file directly (no repo/marketplace involved):**
 
