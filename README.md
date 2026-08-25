@@ -13,11 +13,10 @@ on the Free plan. If you're on Free, this plugin won't work for you yet.
 
 **Add this repo as a marketplace (recommended — gets future updates):**
 
-In Cowork: **Customize → Plugins → the "+" under Personal plugins → Add
-marketplace → Add from a repository**, enter this repo
-(`CervantesVive/job-search-copilot` or the full GitHub URL), then install
-`job-search-copilot` from the list. When this repo gets updated, click
-**Update** on the marketplace in Cowork to pull the new version.
+In Cowork: **Customize → Plugins → Add dropdown → Add marketplace → Add from a repository**, enter this repo
+(`CervantesVive/job-search-copilot` or the full GitHub URL), then sync
+`job-search-copilot` from the list. When you see the "Directory" modal screen with all
+plugins, click **+** to actually add the plugin to co-work.
 
 **Download the plugin file directly (no repo/marketplace involved):**
 
