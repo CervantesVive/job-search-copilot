@@ -1,9 +1,15 @@
 {
   "name": "job-search-copilot",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Runs a self-service job search operation: tracks applications and target companies on a private webpage, scans job boards and company career pages on a schedule, watches Gmail for recruiter replies, flags LinkedIn connections at target companies, and generates interview cheatsheets and mock-interview practice sessions.",
   "author": {
     "name": "Ivo Pletikosic"
   },
-  "keywords": ["job search", "career", "job tracker", "interview prep", "recruiting"]
+  "keywords": [
+    "job search",
+    "career",
+    "job tracker",
+    "interview prep",
+    "recruiting"
+  ]
 }
