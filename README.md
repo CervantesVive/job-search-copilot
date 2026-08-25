@@ -1,4 +1,4 @@
-# ivo-job-search-plugins
+# job-search-copilot
 
 A one-plugin marketplace hosting **job-search-copilot** — see
 [`plugins/job-search-copilot/README.md`](plugins/job-search-copilot/README.md)
