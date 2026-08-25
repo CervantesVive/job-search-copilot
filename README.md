@@ -25,11 +25,12 @@ Grab the `.plugin` file from this repo's [Releases](../../releases) page and
 upload it: **Customize → Plugins → upload option**, select the file,
 install. Simplest for a one-time install with no auto-updates.
 
-**What's next:** once installed, follow [Setup (one
-time)](plugins/job-search-copilot/README.md#setup-one-time) in the plugin
-README to get your tracker up and running.
+## Ok, its installed. Now what?
 
-## Maintaining this repo
+Follow [Setup (one time)](plugins/job-search-copilot/README.md#setup-one-time)
+in the plugin README to get your tracker up and running.
+
+## Maintaining this repo (ignore unless you plan on modifying)
 
 - The installable plugin lives in `plugins/job-search-copilot/`.
 - `.claude-plugin/marketplace.json` at the repo root is what makes "Add
