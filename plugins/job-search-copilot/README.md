@@ -26,6 +26,13 @@ interview prep.
 - **Practice interviews** — on request, roleplays a mock interview based on a
   specific job posting, one question at a time, with feedback.
 
+## Prerequisites
+
+- A Claude Cowork-enabled plan — Cowork requires Pro, Max, Team, or
+  Enterprise; it isn't available on the Free plan.
+- Gmail reply tracking and LinkedIn network matching are optional and can be
+  skipped or added later; everything else works without them.
+
 ## Setup (one time)
 
 1. Install this plugin.
@@ -61,3 +68,8 @@ shows as enabled there — some Cowork setups scope plugins per-Project.
 | `job-search-log` | "I applied to X", "add Y to my watchlist", "heard back from Z" |
 
 See `shared/conventions.md` for the file/data conventions all the skills share.
+
+## Sources
+
+- [Organize your tasks with projects in Claude Cowork](https://support.claude.com/en/articles/14116274-organize-your-tasks-with-projects-in-claude-cowork)
+- [Use plugins in Claude](https://support.claude.com/en/articles/13837440-use-plugins-in-claude)
