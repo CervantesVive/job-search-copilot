@@ -42,6 +42,13 @@ jobs:
           IFS='.' read -r major minor patch <<< "$current"
           new="$major.$minor.$((patch + 1))"
           jq --arg v "$new" '.version = $v' "$file" > "$file.tmp" && mv "$file.tmp" "$file"
+
+          # Cowork's marketplace update check is keyed on the plugin entry's
+          # own version in marketplace.json, not plugin.json — keep both in
+          # sync or installed plugins never see new releases.
+          mkfile=.claude-plugin/marketplace.json
+          jq --arg v "$new" '(.plugins[] | select(.name == "job-search-copilot") | .version) = $v' "$mkfile" > "$mkfile.tmp" && mv "$mkfile.tmp" "$mkfile"
+
           echo "version=$new" >> "$GITHUB_OUTPUT"
           echo "Bumped $current -> $new"
 
@@ -49,7 +56,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add plugins/job-search-copilot/.claude-plugin/plugin.json
+          git add plugins/job-search-copilot/.claude-plugin/plugin.json .claude-plugin/marketplace.json
           git commit -m "Release v${{ steps.bump.outputs.version }}"
           git push origin HEAD:main
 
