@@ -145,10 +145,16 @@ and record it in `tracker.md` alongside the URL.
 Page sections, top to bottom: header with the person's name/profile summary
 and last-updated date, a tab or section switcher for **Applications / Leads /
 Watchlist**, each rendered as a sortable-by-eye table (status as a colored
-pill for Applications). Keep the visual design in the dark, card-based style
-that's easy to scan on a phone — see `skills/job-search-interview-prep/
-references/cheatsheet-template.html` in this plugin for the color/spacing
-language to reuse (translated from cards to table rows).
+pill for Applications), then a footer: one small, muted line — "Updates
+automatically every few days — nothing to do here. (You may see new chats
+appear under 'Scheduled' in your sidebar — that's just these checks running;
+this page is always the current summary.)" Keep the visual design in the
+dark, card-based style that's easy to scan on a phone — see
+`skills/job-search-interview-prep/references/cheatsheet-template.html` in
+this plugin for the color/spacing language to reuse (translated from cards
+to table rows). This is part of the page structure, not a one-time addition
+— since every sync rebuilds the full page from `tracker-data.md`, the
+footer must be included on every sync, not just the first publish.
 
 ## Deduping new finds
 

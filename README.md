@@ -43,6 +43,10 @@ in the plugin README to get your tracker up and running.
   version, tags the commit, and publishes a GitHub Release with the zip
   attached. It fails if there are no changes under
   `plugins/job-search-copilot/` since the last release.
+- If you're supporting a friend and a scan seems overdue but the tracker
+  hasn't updated: check the sidebar under "Scheduled" for the run and its
+  output — that's where to look when debugging, even though end users are
+  never told to go there.
 
 ### Cutting a new Release zip
 

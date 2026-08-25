@@ -194,3 +194,9 @@ applied to [company]"* or *"add [company] to my watchlist"* to update the
 tracker by hand. Keep it to a few sentences plus the priming-results
 line — they now have a working, populated link to check instead of a
 wall of text.
+
+Also work in, low-key, one more sentence — not its own callout, just
+another line among the others: *"One more thing: from now on, each
+automatic check runs as its own new chat that'll show up in your sidebar
+under 'Scheduled' — that's totally normal, you never need to open them,
+your tracker page is always the up-to-date summary."*
