@@ -138,7 +138,29 @@ run finds something, and `initiation: "human_request"` since this was set up
 at their explicit ask. Leave `environment_id` unset so each trigger runs in
 this project's environment.
 
-## 7. Optional: keep the tracker webpage always current
+## 7. Prime it now
+
+Don't leave the tracker empty until the first scheduled run. Right now, in
+this conversation, do the same work `job-search-scan` and
+`job-search-gmail-check` would do on their first scheduled firing:
+
+- Run job-board mode and company-page mode (one batch, same rotation
+  logic as always — don't special-case a bigger or smaller batch for
+  this) against `search-config.md`.
+- If Gmail was connected, also run a gmail-check pass.
+- If `job_boards` and `companies` are both empty (the person skipped
+  naming any), skip this step entirely and say so plainly in the
+  wrap-up rather than pretending to have scanned nothing.
+
+Follow those skills' own logic for writing `tracker-data.md` and syncing
+the webpage (per `conventions.md`) exactly as a scheduled run would —
+this is not a special mode, it's those skills' normal behavior, just
+invoked now instead of waiting. Don't have them send their own
+standalone summary reply, though — hold the results (how many leads
+found, anything needing a reply) to fold into the wrap-up in step 9, so
+the person gets one cohesive message instead of several back to back.
+
+## 8. Optional: keep the tracker webpage always current
 
 Your data is always safe regardless of this setting — every scan writes to
 `tracker-data.md` directly, not the webpage. This setting only affects
@@ -155,14 +177,20 @@ environment in use (probably 'Default'), and set Network access to 'Full'
 or 'Custom' with `*.frame.claudeusercontent.com` allowed. Totally optional —
 skip it if that sounds fiddly, nothing about your data depends on it."*
 
-## 8. Wrap-up message
+## 9. Wrap-up message
 
-End with one short message covering: the tracker link, what's scheduled and
-roughly how often (add: scheduled scans catch up whenever you next open
-Cowork, rather than firing to-the-minute in the background — so checking in
+Fold in what the priming pass in step 7 actually found — "I already went
+ahead and ran your first scan: found 3 leads, added them to your
+tracker" (or "nothing matched yet — I'll keep checking" if it came up
+empty, or "skipped this since no boards or companies were set" if step 7
+had nothing to work with) — rather than only describing what *will*
+happen later. Then cover: the tracker link, what's scheduled and roughly
+how often (scheduled scans catch up whenever you next open Cowork,
+rather than firing to-the-minute in the background — so checking in
 every few days gets you the freshest results), and three things they can
 just say any time — *"prep me for an interview at [company]"*, *"practice
 interview for this posting"* (a job link or pasted description), and *"I
 applied to [company]"* or *"add [company] to my watchlist"* to update the
-tracker by hand. Keep it to a few sentences — they now have a working link
-to check instead of a wall of text.
+tracker by hand. Keep it to a few sentences plus the priming-results
+line — they now have a working, populated link to check instead of a
+wall of text.
