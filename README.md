@@ -29,6 +29,11 @@ install. Simplest for a one-time install with no auto-updates.
   `version` in `plugins/job-search-copilot/.claude-plugin/plugin.json`,
   commit and push, then re-zip that folder's contents (see below) and attach
   it to a new GitHub Release so the direct-download path stays current too.
+- Or run the **Release plugin** workflow (Actions tab → Release plugin →
+  Run workflow) to do all of the above automatically: it bumps the patch
+  version, tags the commit, and publishes a GitHub Release with the zip
+  attached. It fails if there are no changes under
+  `plugins/job-search-copilot/` since the last release.
 
 ### Cutting a new Release zip
 

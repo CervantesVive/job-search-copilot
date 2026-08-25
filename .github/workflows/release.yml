@@ -1,0 +1,73 @@
+name: Release plugin
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine last release tag
+        id: last_tag
+        run: |
+          tag=$(git describe --tags --match 'v*' --abbrev=0 2>/dev/null || true)
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Check for unreleased changes
+        run: |
+          tag="${{ steps.last_tag.outputs.tag }}"
+          if [ -z "$tag" ]; then
+            echo "No previous release tag found; treating all plugin content as unreleased."
+            exit 0
+          fi
+          if git diff --quiet "$tag" HEAD -- plugins/job-search-copilot/; then
+            echo "No changes under plugins/job-search-copilot/ since $tag. Nothing to release."
+            exit 1
+          fi
+          echo "Changes found under plugins/job-search-copilot/ since $tag."
+
+      - name: Bump patch version
+        id: bump
+        run: |
+          file=plugins/job-search-copilot/.claude-plugin/plugin.json
+          current=$(jq -r .version "$file")
+          IFS='.' read -r major minor patch <<< "$current"
+          new="$major.$minor.$((patch + 1))"
+          jq --arg v "$new" '.version = $v' "$file" > "$file.tmp" && mv "$file.tmp" "$file"
+          echo "version=$new" >> "$GITHUB_OUTPUT"
+          echo "Bumped $current -> $new"
+
+      - name: Commit version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add plugins/job-search-copilot/.claude-plugin/plugin.json
+          git commit -m "Release v${{ steps.bump.outputs.version }}"
+          git push origin HEAD:main
+
+      - name: Tag release
+        run: |
+          git tag "v${{ steps.bump.outputs.version }}"
+          git push origin "v${{ steps.bump.outputs.version }}"
+
+      - name: Build plugin zip
+        run: |
+          cd plugins/job-search-copilot
+          zip -r ../../job-search-copilot.plugin . -x "*.DS_Store"
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "v${{ steps.bump.outputs.version }}" \
+            job-search-copilot.plugin \
+            --title "v${{ steps.bump.outputs.version }}" \
+            --generate-notes
