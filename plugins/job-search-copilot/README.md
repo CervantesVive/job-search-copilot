@@ -45,6 +45,10 @@ interview prep.
    project any time to check the tracker, ask for an interview cheatsheet, or
    ask for a practice interview.
 
+If the skills above don't seem to trigger in your new Project: check
+Customize → Plugins from inside that Project and confirm job-search-copilot
+shows as enabled there — some Cowork setups scope plugins per-Project.
+
 ## Skills included
 
 | Skill | Triggered by |
