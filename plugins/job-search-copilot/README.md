@@ -31,7 +31,8 @@ interview prep.
 - A Claude Cowork-enabled plan — Cowork requires Pro, Max, Team, or
   Enterprise; it isn't available on the Free plan.
 - Gmail reply tracking and LinkedIn network matching are optional and can be
-  skipped or added later; everything else works without them.
+  skipped or added later; everything else works without them — but both are
+  very helpful, so it's worth setting them up if you can.
 
 ## Setup (one time)
 
