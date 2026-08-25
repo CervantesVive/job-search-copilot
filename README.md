@@ -9,7 +9,7 @@ Cowork](https://support.claude.com/en/articles/13345190-get-started-with-claude-
 which requires a Pro, Max, Team, or Enterprise plan — it is **not** available
 on the Free plan. If you're on Free, this plugin won't work for you yet.
 
-## Install it — two ways
+## Step 1: Install it — two ways
 
 **Add this repo as a marketplace (recommended — gets future updates):**
 
@@ -25,7 +25,7 @@ Grab the `.plugin` file from this repo's [Releases](../../releases) page and
 upload it: **Customize → Plugins → upload option**, select the file,
 install. Simplest for a one-time install with no auto-updates.
 
-## Ok, its installed. Now what?
+## Step 2: Ok, its installed. Now what?
 
 Follow [Setup (one time)](plugins/job-search-copilot/README.md#setup-one-time)
 in the plugin README to get your tracker up and running.
